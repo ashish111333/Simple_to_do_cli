@@ -1,6 +1,9 @@
 import { Command } from "commander";
 import {Task} from "./Tasktide/task.js";
 
+import * as fs from "node:fs"
+import * as os from "node:os"
+import path  from "node:path";
 
 const program=new Command()
 
@@ -22,6 +25,11 @@ program.command("init")
        .action(()=>{
          
       
+       let homeDir=os.homedir()
+       
+       let path_=path.join()
+       
+              
               
               
        })
