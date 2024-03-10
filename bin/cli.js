@@ -9,8 +9,10 @@ import path  from "node:path"
 import boxen from "boxen"
 
 
+
 const program=new Command()
 
+//add command
 
 
 program.command("add <task>")
@@ -33,9 +35,7 @@ program.command("init")
        
        const path_=path.join(`${homeDir}`,"tasktide")
        const filePath=path.join(`${path_}`,"tasks.json")
-       console.log(path_)
-       console.log(filePath)
-       console.log(typeof filePath)
+   
        if(fs.existsSync(`${path_}`)){
               
               return 
@@ -45,15 +45,15 @@ program.command("init")
               
 
               fs.mkdir(path_,(err)=>{
-                     console.log("somer error occured while trying to create config directory",err)
+                     if (err)
+                     console.log(boxen("somer error occured while trying to create config directory",{backgroundColor:"red"}),err)
               })
               fs.appendFile(filePath,"",(err)=>{
                      
                      if (err){
 
-                            console.log(boxen())
+                            console.log(boxen("could't create tasks.json config file",{backgroundColor:"red"}),err)
                      }
-                     console.log("some error occurred while creating tasktide.json",err)
               })
               
               
