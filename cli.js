@@ -48,8 +48,8 @@ program.command("init")
               
 
               fs.mkdir(path_,(err)=>{
-                     if (err)
-                     console.log(boxen("somer error occured while trying to create config directory",{backgroundColor:"red"}),err)
+                     if (err){
+                     console.log(boxen("somer error occured while trying to create config directory",{backgroundColor:"red"}),err)}
               })
               fs.appendFile(filePath,"",(err)=>{
                      
