@@ -88,6 +88,22 @@ program.command("v")
        .description("shows the Cli version installed on your system")
        .action(()=>{
            
+          
+              fs.readFile("./package.json",(err,data)=>{
+                     
+                     if (err){
+                          console.log(boxen("couldn't open package.json",{backgroundColor:"red"}))  
+                          
+                     }else{
+
+                            let jsonData=JSON.parse(data.toString())
+                            console.log(boxen(`cli-version:${jsonData.version}`))
+                            
+                     }
+                     
+                     
+                     
+              })
          
               
        })     
