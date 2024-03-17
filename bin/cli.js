@@ -10,9 +10,13 @@ import boxen from "boxen"
 
 
 
+checkForConfig()
+
+
 const program=new Command()
 
 //add command
+
 
 
 program.command("add <task>")
@@ -20,50 +24,48 @@ program.command("add <task>")
        .description("add's the given task")
     
        .action((task)=>{
+              
+          
+              const t=new Task(task)
+              let JsonData=null
+              
+              const ConfigJson=path.join(os.homedir(),"tasktide","tasks.json")
+              fs.readFile(ConfigJson,(err,data)=>{
+                     
 
-        let t=new Task(task)
-        t.printTask()
+                     if(err)
+                     console.log(boxen("failed to read tasks.json",{backgroundColor:"red"}))
+                     JsonData=JSON.parse(data)
+                     JsonData.taskCount=JsonData.taskCount+1
+                     JsonData[`task${JsonData[taskCount]}`]=t.getTask()
+                     
+                     
+              })
+              fs.writeFile(ConfigJson,JSON.stringify(JsonData),(err)=>{
+
+                     if(err)
+                     console.log(boxen("some error occured while trying yo write data to tasks.json",{backgroundColor:"red"}),err)
+              })
+
+              
+              
+              
+       
+              
+              
+              
+
+
+        
         
         
        })
-program.command("init")
-       .description("intializes json in home/user/Tasktide.config")
-       .action(()=>{
-         
-      
-       const homeDir=os.homedir()
-       
-       const path_=path.join(`${homeDir}`,"tasktide")
-       const filePath=path.join(`${path_}`,"tasks.json")
-   
-       if(fs.existsSync(`${path_}`)){
-              
-              return 
-              
-              
-       }else{
-              
 
-              fs.mkdir(path_,(err)=>{
-                     if (err)
-                     console.log(boxen("somer error occured while trying to create config directory",{backgroundColor:"red"}),err)
-              })
-              fs.appendFile(filePath,"",(err)=>{
-                     
-                     if (err){
-
-                            console.log(boxen("could't create tasks.json config file",{backgroundColor:"red"}),err)
-                     }
-              })
-              
-              
-       }
-
-})
 
 program.command("clean")
        .description("removes  the config files")
        .action(()=>{
+              
               
               const ConfigPath=path.join(`${os.homedir()}`,"tasktide")
               if (!fs.existsSync(ConfigPath)){
@@ -96,7 +98,7 @@ program.command("v")
                           
                      }else{
 
-                            let jsonData=JSON.parse(data.toString())
+                            const jsonData=JSON.parse(data.toString())
                             console.log(boxen(`cli-version:${jsonData.version}`))
                             
                      }
@@ -111,5 +113,45 @@ program.command("v")
 program.parse(process.argv)
 
 
+
+
+
+
+function checkForConfig(){
+
+       
+
+       const initialJson={
+
+              taskCount:0,
+              
+
+              
+       }
+       const pathToConfigDirectory=path.join(os.homedir(),"tasktide")
+       const pathToConfigFile=path.join(pathToConfigDirectory,"tasks.json")
+       
+       if (fs.existsSync(pathToConfigDirectory)){
+             return 
+              
+       }else{
+              fs.mkdir(pathToConfigDirectory,(err)=>{
+
+                     if (err)
+                     console.log(boxen("failed to create config dir",{backgroundColor:"red"}),err)
+              })
+
+            
+       }
+       
+       fs.appendFile(pathToConfigFile,JSON.stringify(initialJson),(err)=>{
+              
+              if (err)
+              console.log(boxen("error occurred while trying to create json config"),err)
+       })
+       
+       
+       
+}
 
 
