@@ -8,11 +8,12 @@ export  class Task{
     #hasMicrotasks=false
     #task=null
     #allocTime=null
-    #taskId=null
+    
     constructor(TaskString){
         
         
         this.#task=TaskString
+       
         
               
         
@@ -26,12 +27,7 @@ export  class Task{
         
         console.log(this.getTask())
     }
-    addTask(){
-
-                
-        
-        
-    }
+   
 
 
     getTask(){
@@ -39,7 +35,7 @@ export  class Task{
     
         return {
             Task:this.#task,
-            TaskId:this.#taskId,
+            
             
             
         }
