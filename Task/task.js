@@ -5,14 +5,16 @@ export  class Task{
     
   
     
-    #hasMicrotasks=false
+  
     #task=null
-    #allocTime=null
+    
+    #isFinished=null
     
     constructor(TaskString){
         
         
         this.#task=TaskString
+        this.#isFinished=false
        
         
               
@@ -35,7 +37,10 @@ export  class Task{
     
         return {
             Task:this.#task,
+            finished:this.#isFinished,
             
+
+
             
             
         }
