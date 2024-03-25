@@ -8,7 +8,7 @@ import * as fs from "node:fs/promises"
 import * as os from "node:os"
 import path  from "node:path"
 import boxen from "boxen"
-
+import * as fss from "node:fs"
 
 
 
@@ -51,6 +51,7 @@ program.command("add <task>")
                             console.log("some error occured while trying to create config file ",err)
                      }
               }
+              
              
               
               
@@ -74,12 +75,12 @@ program.command("clean")
               
               
               const ConfigPath=path.join(`${os.homedir()}`,"td")
-              if (!fs.existsSync(ConfigPath)){
+              if (!existsSync(ConfigPath)){
                      console.log(boxen("no config files found",{backgroundColor:"green",borderStyle:"double"}))
                      return
               }
 
-                     fs.rm(ConfigPath,{recursive:true},(err)=>{
+                     fss.rm(ConfigPath,{recursive:true},(err)=>{
 
                             if (err){
                                    console.log()
@@ -103,7 +104,8 @@ program.command("d <task>")
 
               const ConfigPath=path.join("td","tasks.json")
               let JsonData=null
-              fs.readFile(ConfigPath,(err,data)=>{
+              
+              fss.readFile(ConfigPath,(err,data)=>{
 
                      if (err)
                      console.log(boxen("failed to read tasks.json",{backgroundColor:"red"}))
@@ -127,7 +129,7 @@ program.command("v")
        .action(()=>{
            
           
-              fs.readFile("./package.json",(err,data)=>{
+              fss.readFile("./package.json",(err,data)=>{
                      
                      if (err){
                       
@@ -156,7 +158,7 @@ program.command("show")
 
               const ConfigPath=path.join("td","tasks.json")
               let tasksJsoN=null
-              fs.readFile(ConfigPath,(err,data)=>{
+              fss.readFile(ConfigPath,(err,data)=>{
 
                      if(err){
                             
