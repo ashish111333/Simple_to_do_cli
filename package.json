@@ -5,7 +5,7 @@
   "main": "tt.js",
   "type": "module",
   "bin": {
-    "tt":"./bin/cli.js"
+    "td":"./bin/cli.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
